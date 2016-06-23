@@ -114,10 +114,12 @@ def camare():
                         # write the image to temporary file
                         t = TempImage()
                         cv2.imwrite(t.path, frame)
-                        with open(t.path) as f:
-                            avatar = leancloud.File(t.path, f)
-                            avatar.save()
-                        t.cleanup()
+                        try:
+                            with open(t.path) as f:
+                                avatar = leancloud.File(t.path, f)
+                                avatar.save()
+                        finally:
+                            t.cleanup()
 
                     # update the last uploaded timestamp and reset the motion
                     # counter
