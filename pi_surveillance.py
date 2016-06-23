@@ -34,6 +34,8 @@ def camare():
     camera = PiCamera()
     camera.resolution = tuple(conf["resolution"])
     camera.framerate = conf["fps"]
+    camera.vflip = conf["vertical_flip"]
+    camera.hflip = conf["horizontal_flip"]
     rawCapture = PiRGBArray(camera, size=tuple(conf["resolution"]))
 
     # 等待摄像头模块启动, 随后初始化平均帧, 最后

@@ -10,5 +10,7 @@
     480
   ],
   "fps": 16,
-  "min_area": 5000
+  "min_area": 5000,
+  "vertical_flip": true,
+  "horizontal_flip": true
 }
