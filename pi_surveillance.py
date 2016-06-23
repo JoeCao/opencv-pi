@@ -3,7 +3,7 @@ import argparse
 import json
 
 import imutils
-import pydevd
+# import pydevd
 import cv2
 import datetime
 from picamera.array import PiRGBArray
@@ -13,6 +13,7 @@ from utils import TempImage
 import time
 import leancloud
 
+# leancloud初始化
 leancloud.init("jMR24M2bameqyYIDN4xuN65a-gzGzoHsz", "N7F5T0FN125WWa9GfbLWmArP")
 
 
@@ -109,7 +110,7 @@ def camare():
                 # check to see if the number of frames with consistent motion is
                 # high enough
                 if motionCounter >= conf["min_motion_frames"]:
-                    # check to see if dropbox sohuld be used
+                    #  检查是否需要双船
                     if conf["use_leancloud"]:
                         # write the image to temporary file
                         t = TempImage()
@@ -130,16 +131,6 @@ def camare():
         else:
             motionCounter = 0
 
-        # check to see if the frames should be displayed to screen
-        # if conf["show_video"]:
-        #     # display the security feed
-        #     cv2.imshow("Security Feed", frame)
-        #     key = cv2.waitKey(1) & 0xFF
-        #
-        #     # if the `q` key is pressed, break from the lop
-        #     if key == ord("q"):
-        #         break
-
         # clear the stream in preparation for the next frame
         rawCapture.truncate(0)
 
@@ -148,8 +139,7 @@ if __name__ == "__main__":
     # pydevd.settrace('192.168.199.168', port=50000, stdoutToServer=True, stderrToServer=True)
     # 构建 argument parser 并解析参数
     args = parse_args()
-    # 过滤警告，加载配置文件并且初始化Dropbox
-    # 客户端
+    # 加载配置文件
     conf = load_config(open(args["conf"]))
     print conf['resolution']
     camare()
