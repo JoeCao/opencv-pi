@@ -1,9 +1,20 @@
 # coding=utf-8
+import logging
+import logging.config
+import os
 import threading
 import argparse
 import json
 import redis
 import pydevd
+
+# 创建一个logger
+if os.path.exists('logging.conf'):
+    logging.config.fileConfig('logging.conf')
+else:
+    logging.basicConfig()
+logger = logging.getLogger('surveillance')
+
 from pi_surveillance import camare
 
 
@@ -54,18 +65,18 @@ class Listener():
                         # wait for loop end
                         self.looper.join()
                         self.looper = None
-                        print 'clear thread'
+                        logger.info('clear thread')
                     else:
-                        print 'stop in progress'
+                        logger.info('stop in progress')
                 else:
-                    print "none for stop"
+                    logger.info("none for stop")
             if item['data'] == 'START':
                 if self.looper is None:
                     self.redis.set("STOPFLAG", "false")
                     self.looper = Looper(self.redis, self.conf)
                     self.looper.start()
                 else:
-                    print 'already running'
+                    logger('already running')
             else:
                 self.work(item)
 
@@ -75,7 +86,9 @@ if __name__ == "__main__":
     args = parse_args()
     # 加载配置文件
     conf = load_config(open(args["conf"]))
-
+    logger.info('connecting to redis')
     r = redis.Redis('localhost', '6379')
+    logger.info('redis connected')
     client = Listener(r, ['test'], conf)
+    logger.info('start listener ')
     client.run()

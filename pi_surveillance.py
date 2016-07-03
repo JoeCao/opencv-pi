@@ -18,22 +18,7 @@ import leancloud
 leancloud.init("jMR24M2bameqyYIDN4xuN65a-gzGzoHsz", "N7F5T0FN125WWa9GfbLWmArP")
 
 # 创建一个logger
-logger = logging.getLogger('runlog')
-
-logger.setLevel(logging.DEBUG)
-# 再创建一个handler，用于输出到控制台
-ch = logging.StreamHandler()
-ch.setLevel(logging.DEBUG)
-# 创建一个handler，用于写入日志文件
-fh = logging.FileHandler('surveillance.log')
-fh.setLevel(logging.DEBUG)
-formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-fh.setFormatter(formatter)
-ch.setFormatter(formatter)
-
-# 给logger添加handler
-logger.addHandler(fh)
-logger.addHandler(ch)
+logger = logging.getLogger('surveillance')
 
 
 def camare(conf, redis):
