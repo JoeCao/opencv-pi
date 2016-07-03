@@ -1,10 +1,7 @@
 # coding=utf-8
-import argparse
-import json
 import logging
 
 import imutils
-# import pydevd
 import cv2
 import datetime
 from picamera.array import PiRGBArray
@@ -21,7 +18,7 @@ leancloud.init("jMR24M2bameqyYIDN4xuN65a-gzGzoHsz", "N7F5T0FN125WWa9GfbLWmArP")
 logger = logging.getLogger('surveillance')
 
 
-class Surveillance:
+class Camera:
     def __init__(self, conf, redis):
         self.conf = conf
         self.redis = redis

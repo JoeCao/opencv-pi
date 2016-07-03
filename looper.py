@@ -15,7 +15,7 @@ else:
     logging.basicConfig()
 logger = logging.getLogger('surveillance')
 
-from pi_surveillance import Surveillance
+from pi_surveillance import Camera
 
 
 def parse_args():
@@ -38,13 +38,13 @@ class Looper(threading.Thread):
         self.conf = conf
 
     def run(self):
-        camera = Surveillance(self.conf, self.redis)
+        camera = Camera(self.conf, self.redis)
         camera.camera_init()
         camera.dynamic_capture()
         camera.camera_stop()
 
 
-class Listener():
+class Surveillance():
     def __init__(self, r, channels, conf):
         self.redis = r
         self.pubsub = self.redis.pubsub()
@@ -91,6 +91,6 @@ if __name__ == "__main__":
     logger.info('connecting to redis')
     r = redis.Redis('localhost', '6379')
     logger.info('redis connected')
-    client = Listener(r, ['test'], conf)
+    client = Surveillance(r, ['test'], conf)
     logger.info('start listener ')
     client.run()
