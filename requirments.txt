@@ -9,7 +9,6 @@ leancloud-sdk==1.6.0
 MarkupSafe==0.23
 numpy==1.11.0
 picamera==1.11
-pycharm===debug
 python-dateutil==2.5.3
 qiniu==7.0.7
 redis==2.10.5
