@@ -15,7 +15,7 @@ else:
     logging.basicConfig()
 logger = logging.getLogger('surveillance')
 
-from pi_surveillance import camare
+from pi_surveillance import Surveillance
 
 
 def parse_args():
@@ -34,12 +34,14 @@ def load_config(configpath):
 class Looper(threading.Thread):
     def __init__(self, redis, conf):
         threading.Thread.__init__(self)
-        # assert isinstance(redis, redis.Redis)
         self.redis = redis
         self.conf = conf
 
     def run(self):
-        camare(conf, self.redis)
+        camera = Surveillance(self.conf, self.redis)
+        camera.camera_init()
+        camera.dynamic_capture()
+        camera.camera_stop()
 
 
 class Listener():
