@@ -52,9 +52,10 @@ class Surveillance():
         self.looper = None
         self.redis.set('RUNNING', 'false')
         self.conf = conf
+        # self.camera = Camera(conf, r)
 
     def work(self, item):
-        print item['channel'], ":", item['data']
+        logger.debug('{}: {}'.format(item['channel'], item['data']))
 
     def run(self):
         for item in self.pubsub.listen():
