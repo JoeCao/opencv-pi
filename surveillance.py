@@ -15,7 +15,7 @@ else:
     logging.basicConfig()
 logger = logging.getLogger('surveillance')
 
-from pi_surveillance import Camera
+from camera import Camera
 
 
 def parse_args():
