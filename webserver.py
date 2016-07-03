@@ -1,4 +1,7 @@
 # coding=utf-8
+import calendar
+from datetime import tzinfo, timedelta, datetime
+
 import leancloud
 import redis
 import time
@@ -41,8 +44,20 @@ def list():
     File = leancloud.Object.extend('_File')
     query = File.query
     query.add_descending('createdAt').limit(50)
-    photos = query.find()
+    photos = ({'name': p.get('name'), 'url': p.get('url'),
+               'created_at': convert_time(p.created_at)} for p in query.find())
     return render_template('snapshot.html', photos=photos)
+
+
+def convert_time(c_time):
+    assert isinstance(c_time, datetime)
+    if c_time:
+        # get integer timestamp to avoid precision lost
+        timestamp = calendar.timegm(c_time.timetuple())
+        local_dt = datetime.fromtimestamp(timestamp)
+        return local_dt.strftime('%Y-%m-%d %H:%M:%S')
+    else:
+        return ''
 
 
 if __name__ == "__main__":

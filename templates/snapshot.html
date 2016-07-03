@@ -62,7 +62,7 @@
 
         {% for pic in photos %}
         <tr>
-            <td><a href="{{ pic.attributes['url'] }}" target="_blank">{{ pic.attributes['name'] }}</a></td>
+            <td><a href="{{ pic.url }}" target="_blank">{{ pic.name }}</a></td>
             <td>{{ pic.created_at}}</td>
         </tr>
         {% endfor %}
